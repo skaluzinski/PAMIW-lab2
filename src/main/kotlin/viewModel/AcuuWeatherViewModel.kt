@@ -7,8 +7,7 @@ import model.AdministrativeArea
 import model.City
 import model.Location
 
-class AcuuWeatherViewModel {
-    private val repository: AccuWeatherRepostiory = AccuWeatherRepostiory()
+class AcuuWeatherViewModel(private val repository: AccuWeatherRepostiory) {
 
     private val _locations = MutableStateFlow(emptyList<Location>())
     val locations = _locations.asStateFlow().onEach { println(it) }

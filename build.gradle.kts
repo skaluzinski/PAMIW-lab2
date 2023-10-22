@@ -10,6 +10,7 @@ group = "com.example"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    maven ( "https://jitpack.io")
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
@@ -33,6 +34,8 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
     implementation("io.ktor:ktor-client-auth:$ktor_version")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.1")
+    implementation("io.insert-koin:koin-core:3.2.0")
+    implementation("io.insert-koin:koin-logger-slf4j:3.2.0")
 
 }
 

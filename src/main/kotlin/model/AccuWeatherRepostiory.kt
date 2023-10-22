@@ -14,13 +14,13 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 private const val API_ENDPOINT = "http://dataservice.accuweather.com/"
-private const val API_KEY = "KdBdxo8zvdCCCrYxEtCrARDCoR8ZTUZe"
+private const val API_KEY = "qQp54atvztCkjUnsovV9pejmRcDXE0UY"
 
 
-class AccuWeatherRepostiory {
-    private val client = HttpClient() {
+class AccuWeatherRepostiory() {
+    private val client =         HttpClient() {
         install(ContentNegotiation) {
-            json(Json{ ignoreUnknownKeys = true })
+            json(Json { ignoreUnknownKeys = true })
         }
         install(Auth) {
             headers {
@@ -28,6 +28,7 @@ class AccuWeatherRepostiory {
             }
         }
     }
+
 
     suspend fun fetchTemperatureForDay(): List<Location> {
         val response: HttpResponse = httpResponse("locations/v1/regions")
@@ -61,15 +62,3 @@ class AccuWeatherRepostiory {
         return response.body()
     }
 }
-
-data class Language (
-    val id: String,
-    val name: String,
-    val displayName: String,
-    val localizedName: String,
-    val iso: String,
-    val languageType: String,
-    val microSoftName: String,
-    val microSoftCode: String,
-    val timeStamp: String,
-)

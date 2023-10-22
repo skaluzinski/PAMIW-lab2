@@ -1,7 +1,9 @@
 pluginManagement {
     repositories {
+        maven ( "https://jitpack.io")
         gradlePluginPortal()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        mavenCentral()
     }
 
     plugins {

@@ -1,27 +1,28 @@
 package view
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import di.appModule
 import kotlinx.coroutines.launch
+import org.koin.core.KoinApplication
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.context.startKoin
 import viewModel.AcuuWeatherViewModel
 
 @Composable
-@Preview
-fun App() {
-    val viewModel = AcuuWeatherViewModel()
+fun App(viewModel: AcuuWeatherViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     val locations by viewModel.locations.collectAsState(initial = emptyList())
@@ -32,7 +33,6 @@ fun App() {
 
     var query by mutableStateOf("")
     MaterialTheme {
-
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)) {
             TextButton(onClick = {
                 coroutineScope.launch {
@@ -72,8 +72,21 @@ fun App() {
     }
 }
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+class AccuWeatherApplication : KoinComponent {
+    val viewModel : AcuuWeatherViewModel by inject()
+
+    fun fetchViewmodel() = viewModel
+}
+
+fun main() {
+    startKoin {
+        modules(appModule)
+    }
+    val app = AccuWeatherApplication()
+    application {
+        Window(onCloseRequest = ::exitApplication) {
+            App(app.viewModel)
+        }
     }
 }
+
